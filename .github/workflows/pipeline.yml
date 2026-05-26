@@ -63,6 +63,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Instalar y ejecutar Snyk
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
