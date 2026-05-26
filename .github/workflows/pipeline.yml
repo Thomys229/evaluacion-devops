@@ -66,5 +66,6 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
+          chmod +x demo/mvnw
           npm install -g snyk
           snyk test --severity-threshold=high --file=demo/pom.xml
