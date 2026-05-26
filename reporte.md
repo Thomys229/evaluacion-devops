@@ -18,11 +18,12 @@ Las siguientes mejoras ayudarán a incrementar la madurez DevOps del repositorio
 ## Roadmap sugerido para alcanzar el 100%
 
 1. Multi-stage build
-2. Coverage equivalente JaCoCo
-3. Dependabot configurado
-4. Networks
-5. Reservations CPU/MEM
-6. README documentado
+2. Deploy automático
+3. Coverage equivalente JaCoCo
+4. Dependabot configurado
+5. Networks
+6. Reservations CPU/MEM
+7. README documentado
 
 ---
 
@@ -137,7 +138,7 @@ deploy:
 | IE2 | Pipeline ejecuta tests | ✅ IMPLEMENTADO |
 | IE3 | SonarCloud/Snyk | ✅ IMPLEMENTADO |
 | IE3 | Bloqueos seguridad needs | ✅ IMPLEMENTADO |
-| IE4 | Deploy automático | ✅ IMPLEMENTADO |
+| IE4 | Deploy automático | ⚠️ MEJORA PENDIENTE |
 | IE2 | Tecnología detectada | ✅ IMPLEMENTADO |
 | IE2 | Coverage equivalente JaCoCo | ⚠️ MEJORA PENDIENTE |
 | IE3 | Dependabot configurado | ⚠️ MEJORA PENDIENTE |
@@ -247,13 +248,15 @@ Workflow revisado
 
 ### IE4 - Deploy automático
 
-- Estado: ✅ IMPLEMENTADO
-- Detalle: Tiene deploy
+- Estado: ⚠️ MEJORA PENDIENTE
+- Detalle: No tiene deploy
 
 - Evidencia:
 ```
 Workflow revisado
 ```
+
+- Qué falta: Agregar deploy automático
 
 
 ### IE2 - Tecnología detectada
