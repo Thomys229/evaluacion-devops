@@ -70,3 +70,19 @@ jobs:
           chmod +x demo/mvnw
           npm install -g snyk
           snyk test --severity-threshold=high --file=demo/pom.xml
+
+          
+  despliegue-simulado:
+    needs: [construir-y-probar, revision-sonarcloud, revision-snyk]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Levantar entorno con Docker Compose
+        run: docker-compose up -d --build
+
+      - name: Verificar estado de los contenedores
+        run: |
+          sleep 15
+          docker ps

@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # ── SERVICIO 1: BASE DE DATOS ──
+  base-datos:
+    image: postgres:15-alpine
+    container_name: bd-evaluacion-devops
+    environment:
+      POSTGRES_USER: user_devops
+      POSTGRES_PASSWORD: password_seguro123
+      POSTGRES_DB: devops_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # Requisito de la pauta: Healthcheck (Control de estado)
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user_devops -d devops_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # Requisito de la pauta: Límites de escalabilidad/recursos
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+  # ── SERVICIO 2: TU MICROSERVICIO BACKEND ──
+  api-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-backend-devops
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://base-datos:5432/devops_db
+      - SPRING_DATASOURCE_USERNAME=user_devops
+      - SPRING_DATASOURCE_PASSWORD=password_seguro123
+    # Asegura la trazabilidad: la API no se levanta hasta que la BD esté 100% sana
+    depends_on:
+      base-datos:
+        condition: service_healthy
+    # Requisito de la pauta: Límites de escalabilidad/recursos
+    deploy:
+      resources:
+        limits:
+          cpus: '1.00'
+          memory: 512M
+
+volumes:
+  postgres_data:
