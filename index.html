@@ -61,20 +61,48 @@ pre {
 <p>Las siguientes mejoras ayudarán a incrementar la madurez DevOps del repositorio.</p>
 <h3>🟠 Prioridad media</h3>
 <ul>
+<li>Multi-stage build</li>
 <li>Coverage equivalente JaCoCo</li>
+</ul>
+<h3>🟢 Mejora avanzada</h3>
+<ul>
+<li>Reservations CPU/MEM</li>
 </ul>
 <hr>
 <h2>Roadmap sugerido para alcanzar el 100%</h2>
 <ol>
-<li>Dockerfile existe</li>
-<li>Deploy automático</li>
+<li>Multi-stage build</li>
 <li>Coverage equivalente JaCoCo</li>
 <li>Dependabot configurado</li>
-<li>Docker Compose/K8s</li>
+<li>Networks</li>
+<li>Reservations CPU/MEM</li>
 <li>README documentado</li>
 </ol>
 <hr>
 <h2>Cómo resolver los GAPs</h2>
+<h3>Multi-stage build</h3>
+<p>Impacto: La imagen Docker puede ser demasiado pesada.</p>
+<h4>Cómo resolver</h4>
+<ul>
+<li>Separar etapa build/runtime</li>
+<li>Usar FROM ... AS build</li>
+</ul>
+<h4>Ejemplo</h4>
+<pre><code>
+FROM node:20 AS build
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm install
+
+RUN npm run build
+
+FROM nginx:alpine
+
+COPY --from=build /app/dist /usr/share/nginx/html
+</code></pre>
 <h3>Coverage equivalente JaCoCo</h3>
 <p>Impacto: No existe medición de cobertura.</p>
 <h4>Cómo resolver</h4>
@@ -85,6 +113,20 @@ pre {
 <h4>Ejemplo</h4>
 <pre><code>
 npm test -- --coverage
+</code></pre>
+<h3>Reservations CPU/MEM</h3>
+<p>Impacto: No existen reservas recursos.</p>
+<h4>Cómo resolver</h4>
+<ul>
+<li>Agregar reservations</li>
+</ul>
+<h4>Ejemplo</h4>
+<pre><code>
+deploy:
+  resources:
+    reservations:
+      cpus: &#39;0.25&#39;
+      memory: 256M
 </code></pre>
 <hr>
 <h2>Tabla evaluación</h2>
@@ -185,7 +227,22 @@ npm test -- --coverage
 <tbody><tr>
 <td>IE1</td>
 <td>Dockerfile existe</td>
+<td>✅ IMPLEMENTADO</td>
+</tr>
+<tr>
+<td>IE1</td>
+<td>Multi-stage build</td>
 <td>⚠️ MEJORA PENDIENTE</td>
+</tr>
+<tr>
+<td>IE1</td>
+<td>Imágenes optimizadas</td>
+<td>✅ IMPLEMENTADO</td>
+</tr>
+<tr>
+<td>IE1</td>
+<td>Docker build funciona</td>
+<td>✅ IMPLEMENTADO</td>
 </tr>
 <tr>
 <td>IE4</td>
@@ -210,7 +267,7 @@ npm test -- --coverage
 <tr>
 <td>IE4</td>
 <td>Deploy automático</td>
-<td>⚠️ MEJORA PENDIENTE</td>
+<td>✅ IMPLEMENTADO</td>
 </tr>
 <tr>
 <td>IE2</td>
@@ -230,6 +287,36 @@ npm test -- --coverage
 <tr>
 <td>IE5</td>
 <td>Docker Compose/K8s</td>
+<td>✅ IMPLEMENTADO</td>
+</tr>
+<tr>
+<td>IE5</td>
+<td>Múltiples servicios</td>
+<td>✅ IMPLEMENTADO</td>
+</tr>
+<tr>
+<td>IE5</td>
+<td>Healthchecks</td>
+<td>✅ IMPLEMENTADO</td>
+</tr>
+<tr>
+<td>IE5</td>
+<td>Volumes</td>
+<td>✅ IMPLEMENTADO</td>
+</tr>
+<tr>
+<td>IE5</td>
+<td>Networks</td>
+<td>⚠️ MEJORA PENDIENTE</td>
+</tr>
+<tr>
+<td>IE3</td>
+<td>Limits CPU/MEM</td>
+<td>✅ IMPLEMENTADO</td>
+</tr>
+<tr>
+<td>IE3</td>
+<td>Reservations CPU/MEM</td>
 <td>⚠️ MEJORA PENDIENTE</td>
 </tr>
 <tr>
@@ -242,18 +329,51 @@ npm test -- --coverage
 <h2>Detalle validaciones</h2>
 <h3>IE1 - Dockerfile existe</h3>
 <ul>
-<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
 </li>
-<li><p>Detalle: Dockerfile no detectado</p>
+<li><p>Detalle: Dockerfile encontrado</p>
 </li>
 <li><p>Evidencia:</p>
 </li>
 </ul>
-<pre><code>Dockerfile ausente
+<pre><code>Dockerfile
+</code></pre>
+<h3>IE1 - Multi-stage build</h3>
+<ul>
+<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+</li>
+<li><p>Detalle: No usa multi-stage</p>
+</li>
+<li><p>Evidencia:</p>
+</li>
+</ul>
+<pre><code>Dockerfile revisado
 </code></pre>
 <ul>
-<li>Qué falta: Crear Dockerfile</li>
+<li>Qué falta: Agregar multi-stage</li>
 </ul>
+<h3>IE1 - Imágenes optimizadas</h3>
+<ul>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
+</li>
+<li><p>Detalle: Usa imágenes optimizadas</p>
+</li>
+<li><p>Evidencia:</p>
+</li>
+</ul>
+<pre><code>Dockerfile revisado
+</code></pre>
+<h3>IE1 - Docker build funciona</h3>
+<ul>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
+</li>
+<li><p>Detalle: Docker build exitoso</p>
+</li>
+<li><p>Evidencia:</p>
+</li>
+</ul>
+<pre><code>-
+</code></pre>
 <h3>IE4 - Pipeline GitHub Actions</h3>
 <ul>
 <li><p>Estado: ✅ IMPLEMENTADO</p>
@@ -300,18 +420,15 @@ npm test -- --coverage
 </code></pre>
 <h3>IE4 - Deploy automático</h3>
 <ul>
-<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
 </li>
-<li><p>Detalle: No tiene deploy</p>
+<li><p>Detalle: Tiene deploy</p>
 </li>
 <li><p>Evidencia:</p>
 </li>
 </ul>
 <pre><code>Workflow revisado
 </code></pre>
-<ul>
-<li>Qué falta: Agregar deploy automático</li>
-</ul>
 <h3>IE2 - Tecnología detectada</h3>
 <ul>
 <li><p>Estado: ✅ IMPLEMENTADO</p>
@@ -361,17 +478,86 @@ Keywords:
 </ul>
 <h3>IE5 - Docker Compose/K8s</h3>
 <ul>
-<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
 </li>
-<li><p>Detalle: No existe docker-compose</p>
+<li><p>Detalle: docker-compose encontrado</p>
 </li>
 <li><p>Evidencia:</p>
 </li>
 </ul>
 <pre><code>docker-compose.yml
 </code></pre>
+<h3>IE5 - Múltiples servicios</h3>
 <ul>
-<li>Qué falta: Agregar docker-compose</li>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
+</li>
+<li><p>Detalle: 2 servicios</p>
+</li>
+<li><p>Evidencia:</p>
+</li>
+</ul>
+<pre><code>base-datos, api-backend
+</code></pre>
+<h3>IE5 - Healthchecks</h3>
+<ul>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
+</li>
+<li><p>Detalle: Tiene healthchecks</p>
+</li>
+<li><p>Evidencia:</p>
+</li>
+</ul>
+<pre><code>docker-compose revisado
+</code></pre>
+<h3>IE5 - Volumes</h3>
+<ul>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
+</li>
+<li><p>Detalle: Tiene volumes</p>
+</li>
+<li><p>Evidencia:</p>
+</li>
+</ul>
+<pre><code>docker-compose revisado
+</code></pre>
+<h3>IE5 - Networks</h3>
+<ul>
+<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+</li>
+<li><p>Detalle: No tiene networks</p>
+</li>
+<li><p>Evidencia:</p>
+</li>
+</ul>
+<pre><code>docker-compose revisado
+</code></pre>
+<ul>
+<li>Qué falta: Agregar networks</li>
+</ul>
+<h3>IE3 - Limits CPU/MEM</h3>
+<ul>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
+</li>
+<li><p>Detalle: Tiene limits</p>
+</li>
+<li><p>Evidencia:</p>
+</li>
+</ul>
+<pre><code>docker-compose revisado
+</code></pre>
+<h3>IE3 - Reservations CPU/MEM</h3>
+<ul>
+<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+</li>
+<li><p>Detalle: No tiene reservations</p>
+</li>
+<li><p>Evidencia:</p>
+</li>
+</ul>
+<pre><code>docker-compose revisado
+</code></pre>
+<ul>
+<li>Qué falta: Agregar reservations</li>
 </ul>
 <h3>IE4 - README documentado</h3>
 <ul>
