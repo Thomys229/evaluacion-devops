@@ -61,48 +61,16 @@ pre {
 <p>Las siguientes mejoras ayudarán a incrementar la madurez DevOps del repositorio.</p>
 <h3>🟠 Prioridad media</h3>
 <ul>
-<li>Multi-stage build</li>
 <li>Coverage equivalente JaCoCo</li>
-</ul>
-<h3>🟢 Mejora avanzada</h3>
-<ul>
-<li>Reservations CPU/MEM</li>
 </ul>
 <hr>
 <h2>Roadmap sugerido para alcanzar el 100%</h2>
 <ol>
-<li>Multi-stage build</li>
-<li>Deploy automático</li>
 <li>Coverage equivalente JaCoCo</li>
-<li>Networks</li>
-<li>Reservations CPU/MEM</li>
 <li>README documentado</li>
 </ol>
 <hr>
 <h2>Cómo resolver los GAPs</h2>
-<h3>Multi-stage build</h3>
-<p>Impacto: La imagen Docker puede ser demasiado pesada.</p>
-<h4>Cómo resolver</h4>
-<ul>
-<li>Separar etapa build/runtime</li>
-<li>Usar FROM ... AS build</li>
-</ul>
-<h4>Ejemplo</h4>
-<pre><code>
-FROM node:20 AS build
-
-WORKDIR /app
-
-COPY . .
-
-RUN npm install
-
-RUN npm run build
-
-FROM nginx:alpine
-
-COPY --from=build /app/dist /usr/share/nginx/html
-</code></pre>
 <h3>Coverage equivalente JaCoCo</h3>
 <p>Impacto: No existe medición de cobertura.</p>
 <h4>Cómo resolver</h4>
@@ -113,20 +81,6 @@ COPY --from=build /app/dist /usr/share/nginx/html
 <h4>Ejemplo</h4>
 <pre><code>
 npm test -- --coverage
-</code></pre>
-<h3>Reservations CPU/MEM</h3>
-<p>Impacto: No existen reservas recursos.</p>
-<h4>Cómo resolver</h4>
-<ul>
-<li>Agregar reservations</li>
-</ul>
-<h4>Ejemplo</h4>
-<pre><code>
-deploy:
-  resources:
-    reservations:
-      cpus: &#39;0.25&#39;
-      memory: 256M
 </code></pre>
 <hr>
 <h2>Tabla evaluación</h2>
@@ -232,7 +186,7 @@ deploy:
 <tr>
 <td>IE1</td>
 <td>Multi-stage build</td>
-<td>⚠️ MEJORA PENDIENTE</td>
+<td>✅ IMPLEMENTADO</td>
 </tr>
 <tr>
 <td>IE1</td>
@@ -267,7 +221,7 @@ deploy:
 <tr>
 <td>IE4</td>
 <td>Deploy automático</td>
-<td>⚠️ MEJORA PENDIENTE</td>
+<td>✅ IMPLEMENTADO</td>
 </tr>
 <tr>
 <td>IE2</td>
@@ -307,7 +261,7 @@ deploy:
 <tr>
 <td>IE5</td>
 <td>Networks</td>
-<td>⚠️ MEJORA PENDIENTE</td>
+<td>✅ IMPLEMENTADO</td>
 </tr>
 <tr>
 <td>IE3</td>
@@ -317,7 +271,7 @@ deploy:
 <tr>
 <td>IE3</td>
 <td>Reservations CPU/MEM</td>
-<td>⚠️ MEJORA PENDIENTE</td>
+<td>✅ IMPLEMENTADO</td>
 </tr>
 <tr>
 <td>IE4</td>
@@ -340,18 +294,15 @@ deploy:
 </code></pre>
 <h3>IE1 - Multi-stage build</h3>
 <ul>
-<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
 </li>
-<li><p>Detalle: No usa multi-stage</p>
+<li><p>Detalle: Usa multi-stage</p>
 </li>
 <li><p>Evidencia:</p>
 </li>
 </ul>
 <pre><code>Dockerfile revisado
 </code></pre>
-<ul>
-<li>Qué falta: Agregar multi-stage</li>
-</ul>
 <h3>IE1 - Imágenes optimizadas</h3>
 <ul>
 <li><p>Estado: ✅ IMPLEMENTADO</p>
@@ -420,18 +371,15 @@ deploy:
 </code></pre>
 <h3>IE4 - Deploy automático</h3>
 <ul>
-<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
 </li>
-<li><p>Detalle: No tiene deploy</p>
+<li><p>Detalle: Tiene deploy</p>
 </li>
 <li><p>Evidencia:</p>
 </li>
 </ul>
 <pre><code>Workflow revisado
 </code></pre>
-<ul>
-<li>Qué falta: Agregar deploy automático</li>
-</ul>
 <h3>IE2 - Tecnología detectada</h3>
 <ul>
 <li><p>Estado: ✅ IMPLEMENTADO</p>
@@ -522,18 +470,15 @@ Keywords:
 </code></pre>
 <h3>IE5 - Networks</h3>
 <ul>
-<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
 </li>
-<li><p>Detalle: No tiene networks</p>
+<li><p>Detalle: Tiene networks</p>
 </li>
 <li><p>Evidencia:</p>
 </li>
 </ul>
 <pre><code>docker-compose revisado
 </code></pre>
-<ul>
-<li>Qué falta: Agregar networks</li>
-</ul>
 <h3>IE3 - Limits CPU/MEM</h3>
 <ul>
 <li><p>Estado: ✅ IMPLEMENTADO</p>
@@ -547,18 +492,15 @@ Keywords:
 </code></pre>
 <h3>IE3 - Reservations CPU/MEM</h3>
 <ul>
-<li><p>Estado: ⚠️ MEJORA PENDIENTE</p>
+<li><p>Estado: ✅ IMPLEMENTADO</p>
 </li>
-<li><p>Detalle: No tiene reservations</p>
+<li><p>Detalle: Tiene reservations</p>
 </li>
 <li><p>Evidencia:</p>
 </li>
 </ul>
 <pre><code>docker-compose revisado
 </code></pre>
-<ul>
-<li>Qué falta: Agregar reservations</li>
-</ul>
 <h3>IE4 - README documentado</h3>
 <ul>
 <li><p>Estado: ⚠️ MEJORA PENDIENTE</p>

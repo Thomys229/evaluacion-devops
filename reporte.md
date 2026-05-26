@@ -6,56 +6,18 @@ Las siguientes mejoras ayudarán a incrementar la madurez DevOps del repositorio
 
 ### 🟠 Prioridad media
 
-- Multi-stage build
 - Coverage equivalente JaCoCo
-
-### 🟢 Mejora avanzada
-
-- Reservations CPU/MEM
 
 ---
 
 ## Roadmap sugerido para alcanzar el 100%
 
-1. Multi-stage build
-2. Deploy automático
-3. Coverage equivalente JaCoCo
-4. Networks
-5. Reservations CPU/MEM
-6. README documentado
+1. Coverage equivalente JaCoCo
+2. README documentado
 
 ---
 
 ## Cómo resolver los GAPs
-
-### Multi-stage build
-
-Impacto: La imagen Docker puede ser demasiado pesada.
-
-#### Cómo resolver
-
-- Separar etapa build/runtime
-- Usar FROM ... AS build
-
-#### Ejemplo
-
-```
-
-FROM node:20 AS build
-
-WORKDIR /app
-
-COPY . .
-
-RUN npm install
-
-RUN npm run build
-
-FROM nginx:alpine
-
-COPY --from=build /app/dist /usr/share/nginx/html
-
-```
 
 ### Coverage equivalente JaCoCo
 
@@ -71,26 +33,6 @@ Impacto: No existe medición de cobertura.
 ```
 
 npm test -- --coverage
-
-```
-
-### Reservations CPU/MEM
-
-Impacto: No existen reservas recursos.
-
-#### Cómo resolver
-
-- Agregar reservations
-
-#### Ejemplo
-
-```
-
-deploy:
-  resources:
-    reservations:
-      cpus: '0.25'
-      memory: 256M
 
 ```
 
@@ -130,14 +72,14 @@ deploy:
 | IE | Evaluación | Estado |
 |---|---|---|
 | IE1 | Dockerfile existe | ✅ IMPLEMENTADO |
-| IE1 | Multi-stage build | ⚠️ MEJORA PENDIENTE |
+| IE1 | Multi-stage build | ✅ IMPLEMENTADO |
 | IE1 | Imágenes optimizadas | ✅ IMPLEMENTADO |
 | IE1 | Docker build funciona | ✅ IMPLEMENTADO |
 | IE4 | Pipeline GitHub Actions | ✅ IMPLEMENTADO |
 | IE2 | Pipeline ejecuta tests | ✅ IMPLEMENTADO |
 | IE3 | SonarCloud/Snyk | ✅ IMPLEMENTADO |
 | IE3 | Bloqueos seguridad needs | ✅ IMPLEMENTADO |
-| IE4 | Deploy automático | ⚠️ MEJORA PENDIENTE |
+| IE4 | Deploy automático | ✅ IMPLEMENTADO |
 | IE2 | Tecnología detectada | ✅ IMPLEMENTADO |
 | IE2 | Coverage equivalente JaCoCo | ⚠️ MEJORA PENDIENTE |
 | IE3 | Dependabot configurado | ✅ IMPLEMENTADO |
@@ -145,9 +87,9 @@ deploy:
 | IE5 | Múltiples servicios | ✅ IMPLEMENTADO |
 | IE5 | Healthchecks | ✅ IMPLEMENTADO |
 | IE5 | Volumes | ✅ IMPLEMENTADO |
-| IE5 | Networks | ⚠️ MEJORA PENDIENTE |
+| IE5 | Networks | ✅ IMPLEMENTADO |
 | IE3 | Limits CPU/MEM | ✅ IMPLEMENTADO |
-| IE3 | Reservations CPU/MEM | ⚠️ MEJORA PENDIENTE |
+| IE3 | Reservations CPU/MEM | ✅ IMPLEMENTADO |
 | IE4 | README documentado | ⚠️ MEJORA PENDIENTE |
 
 
@@ -168,15 +110,13 @@ Dockerfile
 
 ### IE1 - Multi-stage build
 
-- Estado: ⚠️ MEJORA PENDIENTE
-- Detalle: No usa multi-stage
+- Estado: ✅ IMPLEMENTADO
+- Detalle: Usa multi-stage
 
 - Evidencia:
 ```
 Dockerfile revisado
 ```
-
-- Qué falta: Agregar multi-stage
 
 
 ### IE1 - Imágenes optimizadas
@@ -247,15 +187,13 @@ Workflow revisado
 
 ### IE4 - Deploy automático
 
-- Estado: ⚠️ MEJORA PENDIENTE
-- Detalle: No tiene deploy
+- Estado: ✅ IMPLEMENTADO
+- Detalle: Tiene deploy
 
 - Evidencia:
 ```
 Workflow revisado
 ```
-
-- Qué falta: Agregar deploy automático
 
 
 ### IE2 - Tecnología detectada
@@ -347,15 +285,13 @@ docker-compose revisado
 
 ### IE5 - Networks
 
-- Estado: ⚠️ MEJORA PENDIENTE
-- Detalle: No tiene networks
+- Estado: ✅ IMPLEMENTADO
+- Detalle: Tiene networks
 
 - Evidencia:
 ```
 docker-compose revisado
 ```
-
-- Qué falta: Agregar networks
 
 
 ### IE3 - Limits CPU/MEM
@@ -371,15 +307,13 @@ docker-compose revisado
 
 ### IE3 - Reservations CPU/MEM
 
-- Estado: ⚠️ MEJORA PENDIENTE
-- Detalle: No tiene reservations
+- Estado: ✅ IMPLEMENTADO
+- Detalle: Tiene reservations
 
 - Evidencia:
 ```
 docker-compose revisado
 ```
-
-- Qué falta: Agregar reservations
 
 
 ### IE4 - README documentado
