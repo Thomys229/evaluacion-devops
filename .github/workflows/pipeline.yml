@@ -1,0 +1,57 @@
+name: Integracion Continua y Seguridad
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  construir-y-probar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Compilar y ejecutar pruebas
+        # Aquí le indicamos que el pom.xml está en la carpeta demo
+        run: mvn clean verify -f demo/pom.xml
+
+  revision-sonarcloud:
+    needs: construir-y-probar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+
+      - name: Análisis de código en SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          # Le indicamos a SonarCloud dónde está el código base
+          projectBaseDir: demo
+
+  revision-snyk:
+    needs: construir-y-probar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Buscar vulnerabilidades con Snyk
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --file=demo/pom.xml
