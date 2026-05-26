@@ -56,10 +56,15 @@ jobs:
       - name: Descargar el código
         uses: actions/checkout@v4
 
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Instalar y ejecutar Snyk
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
           npm install -g snyk
-          snyk auth $SNYK_TOKEN
           snyk test --severity-threshold=high --file=demo/pom.xml
