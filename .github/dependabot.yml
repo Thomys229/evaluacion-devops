@@ -1,0 +1,19 @@
+version: 2
+updates:
+  # 1. Revisa las librerías de Java (Spring Boot, Maven, etc.)
+  - package-ecosystem: "maven"
+    directory: "/demo" # Aquí es donde vive tu pom.xml
+    schedule:
+      interval: "weekly"
+
+  # 2. Revisa las imágenes base de tu Dockerfile
+  - package-ecosystem: "docker"
+    directory: "/" 
+    schedule:
+      interval: "weekly"
+
+  # 3. Revisa que tu pipeline de GitHub Actions use versiones actualizadas
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
