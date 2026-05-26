@@ -72,7 +72,7 @@ jobs:
           snyk test --severity-threshold=high --file=demo/pom.xml
 
 
-  despliegue-simulado:
+  deploy:
     needs: [construir-y-probar, revision-sonarcloud, revision-snyk]
     runs-on: ubuntu-latest
     steps:
