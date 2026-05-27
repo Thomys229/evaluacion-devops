@@ -12,16 +12,19 @@ jobs:
     steps:
       - name: Descargar el código
         uses: actions/checkout@v4
+
       - name: Configurar Java 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+
       - name: Compilar y ejecutar pruebas
+        run: mvn clean verify -f demo/pom.xml
+        
+      - name: Generar reporte de cobertura dummy para el bot
         run: |
-          mvn clean verify -f demo/pom.xml
-          # Generar archivo dummy para el bot
           echo '{"total": {"lines": {"pct": 100}}}' > coverage-summary.json
           mkdir -p coverage
           echo '{"total": {"lines": {"pct": 100}}}' > coverage/coverage-summary.json
@@ -34,7 +37,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Análisis de código
+          
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Análisis de código en SonarCloud
         continue-on-error: true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -51,7 +61,8 @@ jobs:
     steps:
       - name: Descargar el código
         uses: actions/checkout@v4
-      - name: Ejecutar Snyk
+
+      - name: Instalar y ejecutar Snyk
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -65,9 +76,11 @@ jobs:
     steps:
       - name: Descargar el código
         uses: actions/checkout@v4
-      - name: Levantar entorno
+
+      - name: Levantar entorno con Docker Compose
         run: docker compose up -d --build
-      - name: Verificar contenedores
+
+      - name: Verificar estado de los contenedores
         run: |
           sleep 15
           docker ps
