@@ -28,7 +28,7 @@ Para levantar este proyecto en tu propia máquina, necesitas tener Docker instal
 Se utilizó Gemini para generar diagramas de arquitectura, corregir errores de sintaxis en los archivos YAML y apoyar en la estructura general de este documento.
 
 ## 7. Reflexiones Individuales
-*Nota para el docente: Este encargo fue desarrollado de manera individual.*
+Este encargo fue desarrollado de manera individual
 
 ### Reflexión de Thomas Osorio
 Durante el desarrollo de esta evaluación, logré comprender en la práctica cómo funciona el ciclo de vida completo de un microservicio orientado al backend. Me sirvió muchísimo para asimilar la importancia real de la Integración y Entrega Continua (CI/CD). Pelear con la configuración de GitHub Actions, ajustar los límites de memoria y salud en Docker Compose, y lograr que herramientas estrictas de seguridad como Snyk y SonarCloud aprobaran el código, me dio una perspectiva mucho más clara de las responsabilidades que tiene un desarrollador en su día a día. Siento que ahora entiendo mejor cómo se asegura la trazabilidad y la calidad del software antes de que llegue a un entorno de producción. No fue fácil, pero gracias a los pasos del profesor me pude orientar mejor.
