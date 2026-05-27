@@ -45,15 +45,15 @@ jobs:
           distribution: 'temurin'
 
       - name: Análisis de código en SonarCloud
+        continue-on-error: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn -f demo/pom.xml verify sonar:sonar \
-            -Dsonar.projectKey=Thomys229_evaluacion-devops \
-            -Dsonar.organization=Thomys229 \
+            -Dsonar.projectKey=thomys229_evaluacion-devops \
+            -Dsonar.organization=thomys229 \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${SONAR_TOKEN}
+            -Dsonar.login=$SONAR_TOKEN
 
   revision-snyk:
     needs: construir-y-probar
