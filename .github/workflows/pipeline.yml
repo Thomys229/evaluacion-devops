@@ -22,6 +22,12 @@ jobs:
 
       - name: Compilar y ejecutar pruebas
         run: mvn clean verify -f demo/pom.xml
+      
+      - name: Guardar reporte de cobertura
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: demo/target/site/jacoco/
 
   revision-sonarcloud:
     needs: construir-y-probar
@@ -30,7 +36,7 @@ jobs:
       - name: Descargar el código
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
           
       - name: Configurar Java 17
         uses: actions/setup-java@v4
@@ -44,8 +50,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn -f demo/pom.xml verify sonar:sonar \
-            -Dsonar.projectKey=thomys229_evaluacion-devops \
-            -Dsonar.organization=thomys229 \
+            -Dsonar.projectKey=Thomys229_evaluacion-devops \
+            -Dsonar.organization=Thomys229 \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${SONAR_TOKEN}
 
