@@ -13,7 +13,6 @@ Las siguientes mejoras ayudarán a incrementar la madurez DevOps del repositorio
 ## Roadmap sugerido para alcanzar el 100%
 
 1. Coverage equivalente JaCoCo
-2. README documentado
 
 ---
 
@@ -90,7 +89,7 @@ npm test -- --coverage
 | IE5 | Networks | ✅ IMPLEMENTADO |
 | IE3 | Limits CPU/MEM | ✅ IMPLEMENTADO |
 | IE3 | Reservations CPU/MEM | ✅ IMPLEMENTADO |
-| IE4 | README documentado | ⚠️ MEJORA PENDIENTE |
+| IE4 | README documentado | ✅ IMPLEMENTADO |
 
 
 ---
@@ -318,12 +317,10 @@ docker-compose revisado
 
 ### IE4 - README documentado
 
-- Estado: ⚠️ MEJORA PENDIENTE
-- Detalle: README no detectado
+- Estado: ✅ IMPLEMENTADO
+- Detalle: README encontrado
 
 - Evidencia:
 ```
 README.md
 ```
-
-- Qué falta: Agregar README
