@@ -1,5 +1,5 @@
 # Etapa 1: Construcción (Build)
-FROM eclipse-temurin:17-jdk-alpine AS builder
+FROM eclipse-temurin:25-jdk-alpine AS builder
 WORKDIR /app
 COPY demo/pom.xml demo/mvnw ./
 COPY demo/.mvn .mvn
@@ -8,7 +8,7 @@ RUN chmod +x ./mvnw
 RUN ./mvnw clean package -DskipTests
 
 # Etapa 2: Producción (Run)
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 EXPOSE 8080
